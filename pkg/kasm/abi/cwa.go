@@ -1,4 +1,4 @@
-package kasm
+package abi
 
 // #include <stdlib.h>
 //
@@ -7,7 +7,7 @@ package kasm
 import "C"
 import (
   "unsafe"
-
+  
   wasm "github.com/wasmerio/go-ext-wasm/wasmer"
 )
 
@@ -21,7 +21,7 @@ func resource_write(context unsafe.Pointer, id, ptr, len int32) int32 {
 	return 0
 }
 
-func appendCWAImports(imports *wasm.Imports) (*wasm.Imports, error) {
+func AppendCWAImports(imports *wasm.Imports) (*wasm.Imports, error) {
 	if _, err := imports.Append("io_get_stdout", io_get_stdout, C.io_get_stdout); err != nil {
 		return nil, err
 	} else if _, err = imports.Append("resource_write", resource_write, C.resource_write); err != nil {

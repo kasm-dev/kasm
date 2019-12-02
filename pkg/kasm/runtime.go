@@ -4,6 +4,7 @@ import (
 	"fmt"
 	// "unsafe"
 
+	"github.com/arccoza/kasm/pkg/kasm/abi"
 	// cri "k8s.io/cri-api/pkg/apis/runtime/v1alpha2"
 	// "github.com/perlin-network/life"
 	wasm "github.com/wasmerio/go-ext-wasm/wasmer"
@@ -20,7 +21,7 @@ func (c *Container) AddImport(bytes []byte) error {
 
 func (c *Container) Load(bytes []byte) error {
 	var err error
-	imports, _ := appendCWAImports(wasm.NewImports())
+	imports, _ := abi.AppendCWAImports(wasm.NewImports())
 	c.inst, err = wasm.NewInstanceWithImports(bytes, imports)
 	// c.inst, err = wasm.NewInstance(bytes)
 	fmt.Println(err, c.inst.Exports)
