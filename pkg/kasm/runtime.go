@@ -20,12 +20,19 @@ func (c *Container) AddImport(bytes []byte) error {
 }
 
 func (c *Container) Load(bytes []byte) error {
+	fmt.Println("Loading...")
 	var err error
 	imports, _ := abi.AppendCWAImports(wasm.NewImports())
+	imports, _ = abi.AppendKasiImports(imports)
 	c.inst, err = wasm.NewInstanceWithImports(bytes, imports)
+	fmt.Println(c.inst.Memory.Length())
+	c.inst.Memory.Grow(16)
+	fmt.Println(c.inst.Memory.Length())
 	// c.inst, err = wasm.NewInstance(bytes)
 	fmt.Println(err, c.inst.Exports)
 	// sum := c.inst.Exports["sum"]
+	start := c.inst.Exports["cwa_main"]
+	fmt.Println(start())
 	// ans := sum(1, 2)
 	// fmt.Println(c.inst.Memory.Data())
 	return err
